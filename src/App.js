@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import './styles/App.css';
 import PostItem from './components/PostItem'
 import PostList from "./components/PostList";
@@ -13,27 +13,29 @@ function App() {
     { id: 3, title: "JavaScript", body: "Description" },
   ]);
 
-  const [title, setTitle] = useState('fds')
+  const [post, setPost] = useState({title: '', body: ''})
   const bodyInputRef = useRef();
   const addNewPost = (e) => {
     e.preventDefault();
-    
+
+    setPosts([...posts, {...post, id: Date.now()}])
   }
 
   return (
     <div className="App">
       <form>
-        <MyInput 
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          placeholder="post name" 
+        <MyInput
+          value={post.title}
+          onChange={(e) => setPost({ ...post, title: e.target.value })}
+          placeholder="post name"
         />
-        <MyInput 
-          ref={bodyInputRef}
-          placeholder="post description" 
+        <MyInput
+          value={post.body}
+          onChange={(e) => setPost({ ...post, body: e.target.value })}
+          placeholder="post description"
         />
 
-        <MyButton onClick={addNewPost} >Create</MyButton>
+        <MyButton onClick={addNewPost}>Create</MyButton>
       </form>
       <PostList posts={posts} title="post about JS" />
     </div>
@@ -41,3 +43,4 @@ function App() {
 }
 
 export default App;
+
