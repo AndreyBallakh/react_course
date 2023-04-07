@@ -1,31 +1,23 @@
-import React, { useState, useRef } from "react";
-import './styles/App.css';
-import PostItem from './components/PostItem'
-import PostList from "./components/PostList";
-import MyButton from "./components/UI/Button/MyButton";
-import MyInput from "./components/UI/Input/MyInput";
-import PostForm from "./components/PostForm";
-
+import React from "react";
+import "./styles/App.css";
+import { BrowserRouter, Routes, Route, Switch, Navigate } from "react-router-dom";
+import About from "./pages/About";
+import Posts from "./pages/Posts";
+import Navbar from "./components/UI/Navbar/Navbar";
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "JavaScript", body: "Description" },
-    { id: 2, title: "JavaScript", body: "Description" },
-    { id: 3, title: "JavaScript", body: "Description" },
-  ]);
-
-  const bodyInputRef = useRef();
-  const createPost = (newPost) => {
-    setPosts([...posts, newPost])
-  }
-
   return (
-    <div className="App">
-      <PostForm create={createPost} />
-      <PostList posts={posts} title="post about JS" />
-    </div>
-  );
+    <BrowserRouter>
+      <Navbar />
+      <Switch>
+        <Routes>
+          <Route path='/about' element={<About />} />
+          <Route path='/posts' element={<Posts />} />
+        </Routes>
+        <Navigate to='/posts' />
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
 export default App;
-
